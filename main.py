@@ -1,12 +1,19 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
+import ctypes
 from read_files import *
 from utils.window import *
 
 window = tk.Tk()
 window.geometry('800x600')
 window.title('My Spotify Stats')
+
+window.iconbitmap('app_icon.ico')
+
+myappid = 'mycompany.myproduct.subproduct.version'
+ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+
 window.iconbitmap('app_icon.ico')
 
 def open_file():
