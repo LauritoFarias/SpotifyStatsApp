@@ -32,8 +32,14 @@ def get_most_plays_by_time_period(data_frame, time_period):
             get_most_plays_by_day(data_frame)
 
 def get_most_plays_by_day(data_frame):
-    str_date = data_frame['ts'].split('T')[0]
-    date_numbers = str_date.split('-')
-    data_frame['day'] = date(*date_numbers)
-    play_count_by_day = data_frame['day'].value_counts().sort_index()
+    # Aplicar esta función una sola vez para que el data frame quede con el dato de la fecha transformado a formato 'date'
+    data_frame['ts'] = data_frame['ts'].apply(get_datetime)
+    play_count_by_day = data_frame['ts'].value_counts()
     print(play_count_by_day)
+
+def get_datetime(string:str) -> date:
+    date_string = string.split('T')[0]
+    date_strings = date_string.split('-')
+    date_numbers = list(map(int, date_strings))
+    datetime = date(*date_numbers)
+    return datetime
